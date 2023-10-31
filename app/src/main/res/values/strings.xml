@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">weatherAppFinal</string>
+    <string name="Menu_search">Pesquisar</string>
+    <string name="Menu_foto">Foto</string>
+</resources>
