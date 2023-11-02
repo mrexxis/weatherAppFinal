@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -33,6 +34,7 @@ import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.TextUnitType
 import androidx.compose.ui.unit.dp
 import com.mr.weatherappfinal.ui.theme.WeatherAppFinalTheme
+import java.nio.file.WatchEvent
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Date
@@ -76,7 +78,10 @@ fun Cabecalho(): Unit {
     Row (
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically,
-        modifier = Modifier.padding(12.dp,8.dp)
+        modifier = Modifier
+            .padding(12.dp, 8.dp)
+            .fillMaxWidth()
+
     ){
 
         Button(
@@ -95,7 +100,7 @@ fun Cabecalho(): Unit {
             contentPadding = PaddingValues(),
             modifier = Modifier
                 .clip(CircleShape)
-                .width(35.dp)
+                .size(35.dp)
             ) {
 
             Image(
@@ -150,12 +155,65 @@ fun DataNome(name: String="Mário"): Unit {
     }
 }
 
-
-
-
 @Composable
 fun formatData(data: Date): String {
     val format = SimpleDateFormat("dd MMMM, EEEE yyyy", Locale("pt", "PT"))
     return format.format(data)
 }
+@Preview(showBackground = true, heightDp = 500, widthDp = 380)
+@Composable
+fun Page(): Unit {
+    Column (modifier = Modifier
+        .fillMaxWidth()
+        .padding(12.dp)) {
+        Cabecalho()
+        DataNome()
+        ImagemCentral()
+    }
+}
 
+@Preview(showBackground = true, heightDp = 350, widthDp = 380)
+@Composable
+fun ImagemCentral(): Unit {
+    Box(modifier = Modifier
+        .height(300.dp)
+        .background(Color.Transparent)
+        .fillMaxWidth()
+        ){
+
+        Column {
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(15.dp),
+                contentAlignment = Alignment.TopCenter
+            ){
+                Image(
+                    painter = painterResource(id = R.drawable.sun),
+                    contentDescription = "sol")
+            }
+
+            Row (
+                verticalAlignment = Alignment.Bottom,
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.Center
+            ){
+                Text(text = "12º",
+                    fontWeight = FontWeight.Bold,
+                    fontSize = TextUnit(55f, TextUnitType.Sp),
+                    color = MaterialTheme.colorScheme.primary
+                    )
+                Text(text = "Parcialmente nublado",
+                    fontWeight = FontWeight.Bold,
+                    fontSize = TextUnit(15f, TextUnitType.Sp),
+                    color = MaterialTheme.colorScheme.tertiary
+                )
+
+            }
+
+
+        }
+    }
+
+
+}
