@@ -208,7 +208,7 @@ fun ImagemCentral(): Unit {
                     fontSize = TextUnit(15f, TextUnitType.Sp),
                     color = MaterialTheme.colorScheme.tertiary
                 )
-
+//fim da aula de 2 de novembro
             }
 
 
