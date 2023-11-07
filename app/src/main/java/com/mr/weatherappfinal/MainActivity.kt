@@ -15,6 +15,9 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -73,7 +76,7 @@ fun Greeting(name: String, modifier: Modifier = Modifier) {
 *}
 */
 
-@Preview(showBackground = true, heightDp = 50, widthDp = 380)
+//@Preview(showBackground = true, heightDp = 50, widthDp = 380)
 @Composable
 fun Cabecalho(): Unit {
     Row (
@@ -116,7 +119,7 @@ fun Cabecalho(): Unit {
     }
 }
 
-@Preview (showBackground = true, widthDp = 380)
+//@Preview (showBackground = true, widthDp = 380)
 @Composable
 fun DataNome(name: String="Mário"): Unit {
     Column (
@@ -164,7 +167,7 @@ fun formatData(data: Date): String {
     val format = SimpleDateFormat("dd MMMM, EEEE yyyy", Locale("pt", "PT"))
     return format.format(data)
 }
-@Preview(showBackground = true, heightDp = 500, widthDp = 380)
+@Preview(showBackground = true, heightDp = 600, widthDp = 380)
 @Composable
 fun Page(): Unit {
         Image(
@@ -182,18 +185,85 @@ fun Page(): Unit {
             Cabecalho()
             DataNome()
             ImagemCentral()
+            ProximosSeteDias()
         }
 
 }
 
+var informacaoSeteDias = listOf (
+        temperaturaDia(
+            temperatura = 25,
+            estado = "limpo",
+            resource = R.drawable.sun
+        ),
+        temperaturaDia(
+            temperatura = 22,
+            estado = "nublado",
+            resource = R.drawable.cloudy
+        ),
+        temperaturaDia(
+            temperatura = 18,
+            estado = "chuvoso",
+            resource = R.drawable.rainy
+        ),
+        temperaturaDia(
+            temperatura = 20,
+            estado = "tempestade",
+            resource = R.drawable.storm
+        ),
+        temperaturaDia(
+            temperatura = 12,
+            estado = "chuvoso",
+            resource = R.drawable.rainy
+        ),
+        temperaturaDia(
+            temperatura = 8,
+            estado = "chuvoso",
+            resource = R.drawable.rainy
+        ),
+        temperaturaDia(
+            temperatura = 4,
+            estado = "neve",
+            resource = R.drawable.snowy
+        )
+    )
+
 @Preview(showBackground = true, heightDp = 350, widthDp = 380)
+@Composable
+fun ProximosSeteDias(): Unit {
+
+    LazyRow(){
+        items(informacaoSeteDias) {
+            proximoDia(it)
+        }
+    }
+
+}
+@Composable
+fun proximoDia (temperaturaDia: temperaturaDia): Unit {
+
+    Column (
+        modifier = Modifier
+            .width(100.dp)
+            .padding(15.dp),
+        horizontalAlignment = Alignment.CenterHorizontally
+
+    ){
+        Image(painter = painterResource(id = temperaturaDia.resource), contentDescription = temperaturaDia.estado)
+        Text(text = temperaturaDia.temperatura.toString())
+        Text(text = temperaturaDia.estado,
+            fontSize = TextUnit(13f, TextUnitType.Sp)
+        )
+    }
+}
+//@Preview(showBackground = true, heightDp = 350, widthDp = 380)
 @Composable
 fun ImagemCentral(): Unit {
     Box(
         modifier = Modifier
-        .height(300.dp)
-        .background(Color.Transparent)
-        .fillMaxWidth(),
+            .height(300.dp)
+            .background(Color.Transparent)
+            .fillMaxWidth(),
         contentAlignment = Alignment.Center
         ){
 
