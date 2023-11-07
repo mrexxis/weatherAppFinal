@@ -15,7 +15,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -27,6 +26,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
@@ -34,7 +34,6 @@ import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.TextUnitType
 import androidx.compose.ui.unit.dp
 import com.mr.weatherappfinal.ui.theme.WeatherAppFinalTheme
-import java.nio.file.WatchEvent
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Date
@@ -65,13 +64,15 @@ fun Greeting(name: String, modifier: Modifier = Modifier) {
     )
 }
 
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    WeatherAppFinalTheme {
-        Greeting("Android")
-    }
-}
+/*@Preview(showBackground = true)
+*@Composable
+*fun GreetingPreview() {
+*    WeatherAppFinalTheme {
+*        Greeting("Android")
+*    }
+*}
+*/
+
 @Preview(showBackground = true, heightDp = 50, widthDp = 380)
 @Composable
 fun Cabecalho(): Unit {
@@ -86,13 +87,16 @@ fun Cabecalho(): Unit {
 
         Button(
             onClick = { /*TODO*/ },
-            colors = ButtonDefaults.buttonColors(containerColor = Color.Transparent),
+            colors = ButtonDefaults.buttonColors(containerColor = Color.White),
             contentPadding = PaddingValues(),
             modifier = Modifier.size(35.dp)
             ) {
             Image(
                 painter = painterResource(id = R.drawable.search),
-                contentDescription = R.string.Menu_search.toString())
+                contentDescription = R.string.Menu_search.toString(),
+                //contentScale = ContentScale.FillBounds
+                modifier = Modifier.size(20.dp)
+            )
         }
         Button(
             onClick = { /*TODO*/ },
@@ -163,25 +167,45 @@ fun formatData(data: Date): String {
 @Preview(showBackground = true, heightDp = 500, widthDp = 380)
 @Composable
 fun Page(): Unit {
-    Column (modifier = Modifier
-        .fillMaxWidth()
-        .padding(12.dp)) {
-        Cabecalho()
-        DataNome()
-        ImagemCentral()
-    }
+        Image(
+            painter = painterResource(R.drawable._86449326_37c2256216_b),
+            contentDescription = null,
+            alpha = 0.2F,
+            contentScale = ContentScale.FillHeight
+        )
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(12.dp)
+        ) {
+
+            Cabecalho()
+            DataNome()
+            ImagemCentral()
+        }
+
 }
 
 @Preview(showBackground = true, heightDp = 350, widthDp = 380)
 @Composable
 fun ImagemCentral(): Unit {
-    Box(modifier = Modifier
+    Box(
+        modifier = Modifier
         .height(300.dp)
         .background(Color.Transparent)
-        .fillMaxWidth()
+        .fillMaxWidth(),
+        contentAlignment = Alignment.Center
         ){
 
-        Column {
+        Box {
+            Box (
+                modifier = Modifier
+                    .clip(CircleShape)
+                    .background(Color.White)
+                    .size(280.dp)
+            ){
+
+
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -195,19 +219,24 @@ fun ImagemCentral(): Unit {
 
             Row (
                 verticalAlignment = Alignment.Bottom,
-                modifier = Modifier.fillMaxWidth(),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(0.dp, 170.dp, 0.dp, 0.dp),
                 horizontalArrangement = Arrangement.Center
-            ){
-                Text(text = "12º",
+            ) {
+                Text(
+                    text = "12º",
                     fontWeight = FontWeight.Bold,
                     fontSize = TextUnit(55f, TextUnitType.Sp),
                     color = MaterialTheme.colorScheme.primary
-                    )
-                Text(text = "Parcialmente nublado",
+                )
+                Text(
+                    text = "Parcialmente nublado",
                     fontWeight = FontWeight.Bold,
-                    fontSize = TextUnit(15f, TextUnitType.Sp),
+                    fontSize = TextUnit(10f, TextUnitType.Sp),
                     color = MaterialTheme.colorScheme.tertiary
                 )
+                }
 //fim da aula de 2 de novembro
             }
 
